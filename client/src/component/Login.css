@@ -1,0 +1,19 @@
+#root{
+    height: 100vh;
+    background-size: cover;
+    padding-top: 60px;
+    background-image: url(https://images.pexels.com/photos/94273/jetty-beach-sunset-sea-94273.jpeg);
+  }
+  
+  .login{
+    max-width: 350px;
+    margin: 50px auto 10px;
+    border-radius: 10px;
+    background-color: #FFF;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  .red{
+    color:crimson;
+    cursor: pointer;
+  }

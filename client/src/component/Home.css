@@ -1,0 +1,45 @@
+
+.body{
+    align-items: center;
+}
+table, th, td {
+    border: 3px solid black;
+    margin: auto;
+    text-align: center;
+    font-size: 120%m;
+  }
+ th{
+     background-color: gold;
+     color: black;
+ }
+ th.delt{
+    width: 20%;
+ }
+  tr:hover {background-color: rgb(66, 101, 216);}
+   table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto;
+  }
+button{
+    background-color: rgb(127, 245, 210);
+    padding: 1%;
+    font-size: 125%;
+}
+
+input{
+    font-size: 200%;
+    margin: 2%;
+    width: 50%;
+    height: 10%;
+    border-radius: 2em;
+
+}
+.delete{
+    border-radius: 1em;
+    font-size: small;
+   
+    background-color: red;
+  
+}
+
