@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import {useNavigate} from 'react-router-dom'
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import './Login.css'
 const Register = () => {
@@ -6,6 +7,7 @@ const Register = () => {
   const [password, setpassword] = useState();
   const[username,setusername] = useState();
   const[confirmpassword, setconfirmpassword] = useState();
+  const navigate =useNavigate();
 
   const handleEmailChange = (event) => {
     setemail(event.target.value);
@@ -28,7 +30,7 @@ const Register = () => {
   };
   return (
     <div className="login">
-      <h1>Login</h1>
+      <h1>Sign In</h1>
       <Form onSubmit={(e) => handleSubmit(e)}>
       <FormGroup>
           <Label for="email">Email</Label>
@@ -69,13 +71,9 @@ const Register = () => {
             onChange={(e) => handleconfirmPasswordChange(e)}
           />
         </FormGroup>
-        <FormGroup check>
-          <Label check>
-            <Input type="checkbox" /> Remember Me
-          </Label>
-        </FormGroup>
         <Button>Submit</Button>
       </Form>
+      <div >Already user <span className="red" onClick={()=>navigate('/')}>Log In</span></div>
     </div>
   );
 };

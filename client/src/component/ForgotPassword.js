@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import './Login.css'
+import {useNavigate} from 'react-router-dom'
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
-const Login = () => {
+const ForgotPassword =() => {
   const [email, setemail] = useState();
+  const navigate =useNavigate();
   const [password, setpassword] = useState();
- const[currentuser,setcurrentuser] = useState(false);
+ const[currentuser,setcurrentuser] = useState(true);
  const[confirmpassword, setconfirmpassword] = useState();
   const handleEmailChange = (event) => {
     setemail(event.target.value);
@@ -24,6 +26,9 @@ const Login = () => {
     alert(this.state.email + " " + this.state.password + " ");
     event.preventDefault();
   };
+  const Verifyemail = ()=>{
+    setcurrentuser(false);
+  }
   return (
     <div className="login">
       <h1>Forgot Password</h1>
@@ -39,6 +44,7 @@ const Login = () => {
             onChange={(e) => handleEmailChange(e)}
           />
         </FormGroup>
+        <Button onClick={() =>Verifyemail()}>Next</Button>
         </Form>
   ):(
     <Form>
@@ -64,11 +70,11 @@ const Login = () => {
       </FormGroup>
         
         <Button>Submit</Button>
-        <div className="form-group"><span>Create New Account</span> <a class="red" onClick={() => handleChange()}>Register</a></div>
+        <div className="form-group"><span>Create New Account</span> <a class="red" onClick={() =>navigate('/register')}>Register</a></div>
       </Form>
   )
 }
     </div>
   );
 };
-export default Login;
+export default ForgotPassword;

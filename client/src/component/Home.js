@@ -17,6 +17,7 @@ const [newitem,setnewitem]= useState([]);
 const [text,settext]=useState();
 const [sorttext,setsortext]=useState("asc");
 const [search,setsearch]=useState('');
+const[category,setCategory]=useState();
 const sorting=(col)=>{
 if(sorttext=="asc")
 {
@@ -40,11 +41,17 @@ setnewitem(item);
 
 <div className='body'>
 <h1>TO-DO LIST</h1>
+<input type="text" value={category} onChange={(e)=>setCategory(e.target.value)} placeholder="write here"></input>
   <input type="text" value={text} onChange={(e)=>settext(e.target.value)} placeholder="write here"></input>
-  <button onClick={()=>{setitem([...item,{
-    id:item.length,
-    value:`${text}`,
-  }])
+  <button onClick={()=>{
+    if(text==""||category=="")
+    {
+      window.alert("fill both things ")
+      return ;
+    }
+    useEffect(()=>{
+
+    },[])
   item.sort();
   settext('')
   }}>ADD task</button>

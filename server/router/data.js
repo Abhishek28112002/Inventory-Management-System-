@@ -95,10 +95,11 @@ router.post("/new-product", async (req, res) => {
 
 router.post("/editproduct", async (req, res) => {
   try {
-    const category= await Category.findOne({
-      category: req.body.category})
-    await  category.item.findByIdAndUpdate(req.body.productId,
-    {title :req.body.title})
+    const category= await Category.findOne({category: req.body.category})
+   const item= category.item.findOne(req.body.productId)
+    console.log(item)
+    item.title=req.body.title;
+    category.save();
     res.json({
       status: "SUCCESS",
       message: category

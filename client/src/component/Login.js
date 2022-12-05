@@ -6,7 +6,7 @@ const Login = () => {
   const navigate =useNavigate();
   const [password, setpassword] = useState();
   const handleclick =()=>{
-    navigate("/");
+    navigate("/register");
     }
   const handleEmailChange = (event) => {
     setemail(event.target.value);
@@ -18,7 +18,9 @@ const Login = () => {
   const handleChange=()=>{
 
   }
-
+const Homepage=()=>{
+  navigate("/home")
+}
   const handleSubmit = (event) => {
     alert(this.state.email + " " + this.state.password + " ");
     event.preventDefault();
@@ -46,9 +48,10 @@ const Login = () => {
             value={password}
             onChange={(e) => handlePasswordChange(e)}
           />
+          <div className="form-group"><a class="red" onClick={() =>navigate('/forgotpassword')}>Forgot Password</a></div>
         </FormGroup>
         
-        <Button>Submit</Button>
+        <Button onClick={() =>Homepage()}>Submit</Button>
         <div className="form-group"><span>Create New Account</span> <a class="red" onClick={() => handleclick()}>Register</a></div>
       </Form>
     </div>
