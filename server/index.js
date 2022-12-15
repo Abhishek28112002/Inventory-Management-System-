@@ -1,5 +1,6 @@
 const express= require('express')
 const mongoose=require('mongoose')
+
 const app= express();
 const data=require('./router/data');
 const login=require('./router/Login');
@@ -17,10 +18,12 @@ mongoose.connect(Database_url,{
 app.use(express.json({limit:"50mb"}));
 app.use(bodyParser.json())
 app.use('/loginapi',login);
-app.use('/categoryapi',data)
+app.use('/eventapi',data)
 app.get('/', (req, res) => {
     res.status(200).send('Connected to Login API');
 });
 app.listen(process.env.PORT ||8025,()=>{
     console.log('Listening on port')
 })
+
+

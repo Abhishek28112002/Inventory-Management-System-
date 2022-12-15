@@ -1,33 +1,17 @@
 const express = require("express");
-const Category = require("../models/Model");
-const Product = require("../models/Product");
+const Event = require("../models/Event");
+const InvitedUser = require("../models/InvitedUser");
 const router = express.Router();
-
-router.post("/new-category", async (req, res) => {
-  const category = new Category(req.body);
+const ObjectId = require("mongodb").ObjectId;
+router.post("/new-event", async (req, res) => {
+  const event = new Event(req.body);
   try {
-    const category_exit = await Category.findOne({
-      category: req.body.category,
+    await event.save();
+    return res.json({
+      status: "sucess",
+      message: "Event Created",
+      Event:event
     });
-    if (!category_exit) {
-      category.save((err, doc) => {
-        if (err) {
-          console.log(err);
-          return res.status(400).json({ success: err });
-        }
-        return res.json({
-          status: "sucess",
-          message: "category created",
-          data: category
-        });
-      });
-     
-    } else {
-      return res.json({
-        status: "error",
-        message: "category already exists",
-      });
-    }
   } catch (err) {
     res.json({
       status: "ERROR",
@@ -35,16 +19,16 @@ router.post("/new-category", async (req, res) => {
     });
   }
 });
-router.post("/editcategory", async (req, res) => {
+router.post("/editEvent", async (req, res) => {
   try {
-    const category_exit = await Category.findById(req.body.categoryId);
-    category_exit.category = req.body.category;
+    const Event_exit = await Event.findOne({EventId: req.body.EventId});
+    Event_exit.description = req.body.description;
 
-    category_exit.save((err, doc) => {
+    Event_exit.save((err, doc) => {
       if (err) {
         console.log(err);
         return res.status(400).json({ success: err });
-      }
+      } else res.send(Event_exit);
     });
   } catch (err) {
     res.json({
@@ -53,73 +37,39 @@ router.post("/editcategory", async (req, res) => {
     });
   }
 });
-router.delete("/deletecategory", async (req, res) => {
-  const category = Category.findOneAndDelete({categoryId:req.body.categoryId},
-  (err, result) => {
-    if (err) return res.send(500, err)
-    console.log('got deleted');
-    res.redirect('/');
-    });
-});
-
-router.post("/new-product", async (req, res) => {
-  const product = new Product(req.body);
-  try {
-    let category_exit = await Category.findOne({
-      categoryId: req.body.categoryId,
-    });
-    if(!category_exit){
-       category_exit = new Category({
-        category: req.body.category
-      })
-      category_exit.save();
-    }
-    category_exit.item.push(product);
-    category_exit.save((err, doc) => {
-      if (err) {
-        console.log(err);
-        return res.status(400).json({ success: err });
-      }
-      else
-      {
-        return res.status(200).json({ success:category_exit})
-      }
-    });
-  } catch (err) {
-    res.json({
-      status: "ERROR",
-      message: err.message,
-    });
-  }
-});
-
-router.post("/editproduct", async (req, res) => {
-  try {
-    const category= await Category.findOne({category: req.body.category})
-   const item= category.item.findOne(req.body.productId)
-    console.log(item)
-    item.title=req.body.title;
-    category.save();
-    res.json({
-      status: "SUCCESS",
-      message: category
-    });
-  }
- catch (err) {
-    res.json({
-      status: "ERROR",
-      message: err.message,
-    });
-  }
-});
-router.delete("deleteproduct", async (req, res) => {
-  const category = Category.findOne({ category: req.body.category });
-  const product = category.item.findByIdAndDelete(req.body.productId,
+router.delete("/deleteEvent", async (req, res) => {
+  const Event = Event.findOneAndDelete(
+    { EventId: req.body.EventId },
     (err, result) => {
-      if (err) return res.send(500, err)
-      console.log('got deleted');
-      res.redirect('/');
-      });
+      if (err) return res.send(500, err);
+      console.log("got deleted");
+      res.send("Event delted successfully");
+    }
+  );
+});
+
+router.post("/inviteUser", async (req, res) => {
+  const InviteUser = new InvitedUser(req.body);
+  try {
+    const Event_exit = await Event.findOne({
+      EventId: ObjectId(req.body.EventId),
+    });
+
+    Event_exit.invitedUser.push(InviteUser);
+    Event_exit.save((err, doc) => {
+      if (err) {
+        console.log(err);
+        return res.status(400).json({ success: err });
+      } else {
+        return res.status(200).json({ success: Event_exit });
+      }
+    });
+  } catch (err) {
+    res.json({
+      status: "ERROR",
+      message: err.message,
+    });
+  }
 });
 
 module.exports = router;
